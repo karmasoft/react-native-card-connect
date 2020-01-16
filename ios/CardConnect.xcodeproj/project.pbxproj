@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		32C23ECE23CFF4E4008F308F /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32C23EAF23CFF4D9008F308F /* libReact.a */; };
-		32D0171023CFF9D200C633E2 /* CardConnectConsumerSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32D0170F23CFF9D200C633E2 /* CardConnectConsumerSDK.framework */; platformFilter = ios; };
+		32C23ECE23CFF4E4008F308F /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32C23EAF23CFF4D9008F308F /* libReact.a */; platformFilter = ios; };
+		32D0171023CFF9D200C633E2 /* CardConnectConsumerSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32D0170F23CFF9D200C633E2 /* CardConnectConsumerSDK.framework */; platformFilter = ios; settings = {ATTRIBUTES = (Required, ); }; };
 		B3E7B58A1CC2AC0600A0062D /* CardConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* CardConnect.m */; };
 /* End PBXBuildFile section */
 
