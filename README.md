@@ -11,7 +11,16 @@
 ## Usage
 ```javascript
 import CardConnect from 'react-native-card-connect';
+import moment from 'moment';
 
-// TODO: What to do with the module?
-CardConnect;
+expDate = moment('12/22', 'MM/YY').toISOString();
+CardConnect.setEndpoint('fts.cardconnect.com:6443')
+// card, expiration date, CVV
+CardConnect.generateTokenForCard('4788250000121443', expDate, '123', (error, token) => {
+  // handle error or generated token
+});
 ```
+
+## Additional Information
+
+[CardConnect Mobile SDK](https://developer.cardconnect.com/mobile-sdks#get-a-token)
