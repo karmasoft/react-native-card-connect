@@ -1,18 +1,33 @@
 #import "CardConnect.h"
 #import <CardConnectConsumerSDK/CardConnectConsumerSDK.h>
+#import <CardConnectConsumerSDK/CCCCardInfo.h>
+#import <CardConnectConsumerSDK/CCCAccount.h>
 #import <React/RCTLog.h>
+#import <React/RCTConvert.h>
 
 @implementation CardConnect
 
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(sampleMethod:(NSString *)stringArgument numberParameter:(nonnull NSNumber *)numberArgument callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(setEndpoint:(NSString *)endpoint) {
+    [CCCAPI instance].endpoint = endpoint;
+}
+
+RCT_EXPORT_METHOD(generateTokenForCard:(NSString *)cardNumber expirationDate:(NSDate *)expirationDate CVV:(NSString *)CVV callback:(RCTResponseSenderBlock)callback)
 {
-    // TODO: Implement some actually useful functionality
-    [CCCAPI instance].endpoint = @"fts.cardconnect.com:999";
-    RCTLogInfo(@"Testing logging from native module with params: %@, %@", numberArgument, stringArgument);
-    // [CCCAPI instance] generateAccountForCard:<your card object> completion:^(CCCAccount *account, NSError *error){}];
-    callback(@[[NSString stringWithFormat: @"numberArgument: %@ stringArgument: %@, and test info", numberArgument, stringArgument]]);
+    CCCCardInfo *card = [CCCCardInfo new];
+    card.cardNumber = cardNumber;
+    card.expirationDate = expirationDate;
+    card.CVV = CVV;
+
+    // RCTLogInfo(@"Testing logging from native module with params: %@, %@", numberArgument, stringArgument);
+    [[CCCAPI instance] generateAccountForCard:card completion:^(CCCAccount *account, NSError *error){
+        if (account) {
+            callback(@[[NSNull null], account.token]);
+        } else {
+            callback(@[error.description, [NSNull null]]);
+        }
+    }];
 }
 
 @end

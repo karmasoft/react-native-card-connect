@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import CardConnect from 'react-native-card-connect';
+import moment from 'moment';
 
 export default class App extends Component {
   state = {
@@ -8,10 +9,13 @@ export default class App extends Component {
     message: '--'
   };
   componentDidMount() {
-    CardConnect.sampleMethod('Testing', 123, (message) => {
+    expirationDate = moment('12/22', 'MM/YY').toISOString();
+    console.log(expirationDate);
+    CardConnect.setEndpoint('fts.cardconnect.com:6443')
+    CardConnect.generateTokenForCard('4788250000121443', expirationDate, '123', (error, token) => {
       this.setState({
         status: 'native callback received',
-        message
+        message: token ? token : error
       });
     });
   }
