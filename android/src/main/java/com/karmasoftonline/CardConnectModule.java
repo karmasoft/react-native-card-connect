@@ -1,9 +1,11 @@
-package com.reactlibrary;
+package com.karmasoftonline;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
+
+import com.bolt.consumersdk.CCConsumer;
 
 public class CardConnectModule extends ReactContextBaseJavaModule {
 
@@ -20,8 +22,12 @@ public class CardConnectModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void sampleMethod(String stringArgument, int numberArgument, Callback callback) {
-        // TODO: Implement some actually useful functionality
-        callback.invoke("Received numberArgument: " + numberArgument + " stringArgument: " + stringArgument);
+    public void setEndpoint(String endpoint) {
+        CCConsumer.getInstance().getApi().setEndPoint(endpoint);
+    }
+
+    @ReactMethod
+    public void generateTokenForCard(String cardNumber, String expirationDate, String cvv, Callback callback) {
+        callback.invoke(null, "test");
     }
 }
