@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3268E4AA24AC54AC002FB60B /* CardConnectConsumerSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3268E4A924AC54AC002FB60B /* CardConnectConsumerSDK.framework */; platformFilter = ios; settings = {ATTRIBUTES = (Required, ); }; };
 		32C23ECE23CFF4E4008F308F /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32C23EAF23CFF4D9008F308F /* libReact.a */; platformFilter = ios; };
-		32D0171023CFF9D200C633E2 /* CardConnectConsumerSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32D0170F23CFF9D200C633E2 /* CardConnectConsumerSDK.framework */; platformFilter = ios; settings = {ATTRIBUTES = (Required, ); }; };
 		B3E7B58A1CC2AC0600A0062D /* CardConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* CardConnect.m */; };
 /* End PBXBuildFile section */
 
@@ -141,8 +141,8 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libCardConnect.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCardConnect.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3268E4A924AC54AC002FB60B /* CardConnectConsumerSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CardConnectConsumerSDK.framework; sourceTree = "<group>"; };
 		32C23E9B23CFF4D9008F308F /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		32D0170F23CFF9D200C633E2 /* CardConnectConsumerSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CardConnectConsumerSDK.framework; path = CardConnectSDK/Universal/CardConnectConsumerSDK.framework; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* CardConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardConnect.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* CardConnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardConnect.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -152,7 +152,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32D0171023CFF9D200C633E2 /* CardConnectConsumerSDK.framework in Frameworks */,
+				3268E4AA24AC54AC002FB60B /* CardConnectConsumerSDK.framework in Frameworks */,
 				32C23ECE23CFF4E4008F308F /* libReact.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -171,6 +171,7 @@
 		32C23E9A23CFF4D9008F308F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3268E4A924AC54AC002FB60B /* CardConnectConsumerSDK.framework */,
 				32C23E9B23CFF4D9008F308F /* React.xcodeproj */,
 			);
 			name = Frameworks;
@@ -202,7 +203,6 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				32D0170F23CFF9D200C633E2 /* CardConnectConsumerSDK.framework */,
 				B3E7B5881CC2AC0600A0062D /* CardConnect.h */,
 				B3E7B5891CC2AC0600A0062D /* CardConnect.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
@@ -220,7 +220,6 @@
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
 				58B511D91A9E6C8500147676 /* CopyFiles */,
-				32D0170E23CFF99000C633E2 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -384,26 +383,6 @@
 		};
 /* End PBXReferenceProxy section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		32D0170E23CFF99000C633E2 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\nif [ \"${CONFIGURATION}\" = \"Production\" ]; then\n    cp -rf \"${PROJECT_DIR}/CardConnectSDK/Release\"/* \"${PROJECT_DIR}/\"\nelse\n    cp -rf \"${PROJECT_DIR}/CardConnectSDK/Universal\"/* \"${PROJECT_DIR}/\"\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		58B511D71A9E6C8500147676 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -516,6 +495,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/CardConnectSDK/Universal",
 					"$(PROJECT_DIR)/CardConnectSDK/Release",
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -537,6 +517,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/CardConnectSDK/Universal",
 					"$(PROJECT_DIR)/CardConnectSDK/Release",
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

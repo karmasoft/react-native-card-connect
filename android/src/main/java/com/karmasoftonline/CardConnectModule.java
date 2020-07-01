@@ -6,10 +6,10 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 
 import com.bolt.consumersdk.CCConsumer;
+import com.bolt.consumersdk.CCConsumerTokenCallback;
 import com.bolt.consumersdk.domain.CCConsumerCardInfo;
 import com.bolt.consumersdk.domain.CCConsumerAccount;
 import com.bolt.consumersdk.domain.CCConsumerError;
-import com.bolt.consumersdk.CCConsumerTokenCallback;
 
 public class CardConnectModule extends ReactContextBaseJavaModule {
 
@@ -27,7 +27,7 @@ public class CardConnectModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setEndpoint(String endpoint) {
-        CCConsumer.getInstance().getApi().setEndPoint(endpoint);
+        CCConsumer.getInstance().getApi().setEndPoint("https://" + endpoint);
     }
 
     @ReactMethod
@@ -37,16 +37,18 @@ public class CardConnectModule extends ReactContextBaseJavaModule {
         card.setExpirationDate(expirationDate);
         card.setCvv(cvv);
 
+        final Callback cb = callback;
+
         CCConsumer.getInstance().getApi().generateAccountForCard(card, new CCConsumerTokenCallback() {
             @Override
             public void onCCConsumerTokenResponse(CCConsumerAccount consumerAccount) {
-                callback.invoke(null, consumerAccount.getToken());
+                cb.invoke("what the fuck", "token:" + consumerAccount.getToken() + ",url:" + CCConsumer.getInstance().getApi().getEndPoint());
             }
 
             @Override
             public void onCCConsumerTokenResponseError(CCConsumerError error) {
-                callback.invoke(error.getResponseMessage(), null);
+                cb.invoke("error:" + error.getResponseMessage() + "str:" + error.toString(), "we got an error:" + CCConsumer.getInstance().getApi().getEndPoint());
             }
-        })
+        });
     }
 }

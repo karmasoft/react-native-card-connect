@@ -208,6 +208,6 @@ UIImage* CCC_ImageFromBase64GZippedString(NSString *string);
 
  @return The UTC NSDateFormatter used in the SDK.
  */
-NSDateFormatter* CCC_UTCDateFormatter();
+NSDateFormatter* CCC_UTCDateFormatter(void);
 
 @end

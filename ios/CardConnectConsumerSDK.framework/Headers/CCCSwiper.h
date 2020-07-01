@@ -29,6 +29,45 @@
 
 #import <Foundation/Foundation.h>
 
+/** Error Domain for swiper errors */
+extern NSString * _Nonnull const CCCSwiperErrorDomain;
+
+/** Model name for BBPOS devices. */
+extern NSString * _Nonnull const CCCSwiperModelBBPOS;
+
+/** Model name for VP3300 devices. */
+extern NSString * _Nonnull const CCCSwiperModelVP3300;
+
+/** Model name for VP3600 devices. */
+extern NSString * _Nonnull const CCCSwiperModelVP3600;
+
+/** Error codes for CCCSwiperErrorDomain. */
+typedef NS_ENUM(NSInteger, CCCSwiperError)
+{
+    /** The application hasnt received audio access permission from the user. */
+    CCCSwiperErrorAudioPermissionDenied = 100,
+    /** A chip error occured and the user should swipe the card. */
+    CCCSwiperErrorSwipeCard,
+    /** A chip card was swiped and should be inserted. */
+    CCCSwiperErrorInsertCard,
+    /** The transaction was canceled. */
+    CCCSwiperErrorCanceledTransaction,
+    /** The swiper timed out. */
+    CCCSwiperErrorTimeout,
+    /** Connection error. */
+    CCCSwiperErrorConnectionError,
+    /** Unsupported connection mode. */
+    CCCSwiperErrorUnsupportedMode,
+    /** Swiped card was unable to be read. */
+    CCCSwiperErrorBadCardRead,
+    /** The device failed to configure. */
+    CCCSwiperErrorConfigurationError,
+    /** The device failed to start audio connection due to another application taking higher priority over audio. */
+    CCCSwiperErrorOtherAudioPlaying,
+    /** An unknown error occured, check localized description for details. */
+    CCCSwiperErrorUnknown = 500
+};
+
 @class CCCAccount;
 
 @protocol CCCSwiperDelegate;
@@ -40,10 +79,23 @@ typedef NS_ENUM(NSInteger, CCCSwiperConnectionState)
 {
     /** The swiper is not connected. */
     CCCSwiperConnectionStateDisconnected = 0,
-    /** The swiper is attempting to connect. */
-    CCCSwiperConnectionStateConnecting = 1,
+    /** The application is looking for devices.
+     
+     The swiper can be in this state from two methods, findDevices and connectToDevice.
+     */
+    CCCSwiperConnectionStateSearching,
+    /** The swiper is attempting to connect.
+     
+     User interaction should be disabled until the state changes.
+     */
+    CCCSwiperConnectionStateConnecting,
     /** The swiper is connected. */
-    CCCSwiperConnectionStateConnected = 2,
+    CCCSwiperConnectionStateConnected,
+    /** The swiper is configuring.
+     
+     User interaction should be disabled until the state changes.
+     */
+    CCCSwiperConnectionStateConfiguring
 };
 
 /**
@@ -70,7 +122,7 @@ typedef NS_ENUM(NSInteger, CCCSwiperBatteryStatus)
 /**
  The delegate for the swiper callbacks.
  */
-@property(nonatomic, weak) id<CCCSwiperDelegate> delegate;
+@property(nonatomic, weak, nullable) id<CCCSwiperDelegate> delegate;
 
 /**
  The connection state of the swiper.
@@ -80,7 +132,7 @@ typedef NS_ENUM(NSInteger, CCCSwiperBatteryStatus)
 /**
  The model of swiper being used.
  */
-+ (NSString*)model;
++ (NSString* _Nonnull)model;
 
 /**
  Flag for setting or checking if debug logging is enabled.
@@ -94,7 +146,7 @@ typedef NS_ENUM(NSInteger, CCCSwiperBatteryStatus)
 
  @return An instance of CCCSwiper.
  */
-- (instancetype)initWithDelegate:(id<CCCSwiperDelegate>)delegate;
+- (instancetype _Nullable)initWithDelegate:(id<CCCSwiperDelegate> _Nullable)delegate;
 
 /**
  Used to initialize CCCSwiper with a delegate and set logging enabled.
@@ -104,7 +156,7 @@ typedef NS_ENUM(NSInteger, CCCSwiperBatteryStatus)
 
  @return An instance of CCCSwiper.
  */
-- (instancetype)initWithDelegate:(id<CCCSwiperDelegate>)delegate loggingEnabled:(BOOL)enabled;
+- (instancetype _Nullable)initWithDelegate:(id<CCCSwiperDelegate> _Nullable)delegate loggingEnabled:(BOOL)enabled;
 
 /**
  Indicates if an audio warning should be displayed.
@@ -129,7 +181,7 @@ typedef NS_ENUM(NSInteger, CCCSwiperBatteryStatus)
  A required method notifying the delegate that CCCSwiper successfully generated a token and returns an account.
 
  Call completion to start the swiper again. If you presented a status indicator or disabled user interaction in
- [CCCSwiperDelegate swiperDidStartMSR:], dismiss the status indicator and re-enable user interaction at this point
+ [CCCSwiperDelegate swiperDidStartCardRead:], dismiss the status indicator and re-enable user interaction at this point
  before calling completion.
 
  @param swiper An instance of CCCSwiper.
@@ -138,20 +190,20 @@ typedef NS_ENUM(NSInteger, CCCSwiperBatteryStatus)
 
  @see CCCAccount
  */
-- (void)swiper:(CCCSwiper *)swiper didGenerateTokenWithAccount:(CCCAccount *)account completion:(void (^)())completion;
+- (void)swiper:(CCCSwiper * _Nonnull)swiper didGenerateTokenWithAccount:(CCCAccount * _Nullable)account completion:(void (^ _Nonnull)(void))completion;
 
 /**
  A required method notifying the delegate that CCCSwiper failed to swipe the card.
 
  Call completion to start the swiper again. If you presented a status indicator or disabled user interaction in
- [CCCSwiperDelegate swiperDidStartMSR:], dismiss the status indicator and re-enable user interaction at this point
+ [CCCSwiperDelegate swiperDidStartCardRead:], dismiss the status indicator and re-enable user interaction at this point
  before calling completion.
 
  @param swiper An instance of CCCSwiper.
  @param error The error that occurred if available.
  @param completion Block that should be called to start the swiper again.
  */
-- (void)swiper:(CCCSwiper *)swiper didFailWithError:(NSError *)error completion:(void (^)())completion;
+- (void)swiper:(CCCSwiper * _Nonnull)swiper didFailWithError:(NSError * _Nonnull)error completion:(void (^ _Nonnull)(void))completion;
 
 @optional
 
@@ -162,7 +214,7 @@ typedef NS_ENUM(NSInteger, CCCSwiperBatteryStatus)
 
  @param swiper An instance of CCCSwiper.
  */
-- (void)swiper:(CCCSwiper *)swiper connectionStateHasChanged:(CCCSwiperConnectionState)state;
+- (void)swiper:(CCCSwiper * _Nonnull)swiper connectionStateHasChanged:(CCCSwiperConnectionState)state;
 
 /**
  Optional method notifying the delegate that the CCCSwiper battery is low or in critical state.
@@ -170,7 +222,7 @@ typedef NS_ENUM(NSInteger, CCCSwiperBatteryStatus)
  @param swiper An instance of CCCSwiper.
  @param status The status of the swiper.
  */
-- (void)swiper:(CCCSwiper *)swiper batteryLevelStatusHasChanged:(CCCSwiperBatteryStatus)status;
+- (void)swiper:(CCCSwiper * _Nonnull)swiper batteryLevelStatusHasChanged:(CCCSwiperBatteryStatus)status;
 
 /**
  Optional method notifying the delegate that CCCSwiper started an MSR transaction.
@@ -179,6 +231,6 @@ typedef NS_ENUM(NSInteger, CCCSwiperBatteryStatus)
 
  @param swiper An instance of CCCSwiper.
  */
-- (void)swiperDidStartMSR:(CCCSwiper *)swiper;
+- (void)swiperDidStartCardRead:(CCCSwiper * _Nonnull)swiper;
 
 @end

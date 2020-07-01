@@ -13,6 +13,8 @@ export default class App extends Component {
     console.log(expirationDate);
     CardConnect.setEndpoint('fts.cardconnect.com:6443')
     CardConnect.generateTokenForCard('4788250000121443', expirationDate, '123', (error, token) => {
+      console.log(token)
+      console.log(error)
       this.setState({
         status: 'native callback received',
         message: token ? token : error

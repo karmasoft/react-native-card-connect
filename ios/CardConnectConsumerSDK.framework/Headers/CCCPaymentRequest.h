@@ -44,9 +44,26 @@
 /**
  The total amount for the transaction.
 
- **REQUIRED**
+ * *REQUIRED if paymentSummaryItems is not provided*
  */
 @property (nonatomic, copy) NSDecimalNumber * _Nullable total;
+
+/**
+ Your company name that will appear in the apple pay label as "PAY <applePayCompanyName> <total>"
+ 
+ * *REQUIRED if paymentSummaryItems is not provided*
+ 
+ As required by apple, this label should reference who the user is paying this total amount to.
+ If this is not provided you'll not see the apple pay option in CCCAccountListViewController.
+ */
+@property (nonatomic, copy) NSString * _Nullable companyName;
+
+/**
+ An optional list of summary items for apple pay.
+ 
+ If provided, this list of items will appear in the apple pay receipt instead of the single total line item with companyName. This should be an array of PKPaymentSummaryItem with the final item containing the total amount as provided above. This will be confirmed to be an array of PKPaymentSummaryItem and will default to total and companyName if it's anything else.
+ */
+@property (nonatomic, copy) NSArray * _Nullable paymentSummaryItems;
 
 /**
  Optional data that can be passed for the transaction.
