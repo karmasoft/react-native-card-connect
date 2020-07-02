@@ -6,7 +6,11 @@
 
 ### Mostly automatic installation
 
+For RN Version < 0.60 (no autolinking)
+
 `$ react-native link react-native-card-connect`
+
+For RN Version > 0.60 (with autolinking) nothing needs to be done other than installing the package.
 
 ## Usage
 ```javascript
