@@ -42,12 +42,12 @@ public class CardConnectModule extends ReactContextBaseJavaModule {
         CCConsumer.getInstance().getApi().generateAccountForCard(card, new CCConsumerTokenCallback() {
             @Override
             public void onCCConsumerTokenResponse(CCConsumerAccount consumerAccount) {
-                cb.invoke("what the fuck", "token:" + consumerAccount.getToken() + ",url:" + CCConsumer.getInstance().getApi().getEndPoint());
+                cb.invoke(null, "token:" + consumerAccount.getToken() + ",endpoint:" + CCConsumer.getInstance().getApi().getEndPoint());
             }
 
             @Override
             public void onCCConsumerTokenResponseError(CCConsumerError error) {
-                cb.invoke("error:" + error.getResponseMessage() + "str:" + error.toString(), "we got an error:" + CCConsumer.getInstance().getApi().getEndPoint());
+                cb.invoke("error:" + error.getResponseMessage() + ":" + error.toString() + ",endpoint:" + CCConsumer.getInstance().getApi().getEndPoint(), null);
             }
         });
     }
