@@ -1,5 +1,9 @@
 package com.karmasoftonline;
 
+import java.util.Date;
+import java.time.Instant;
+import java.text.SimpleDateFormat;
+
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -32,9 +36,11 @@ public class CardConnectModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void generateTokenForCard(String cardNumber, String expirationDate, String cvv, Callback callback) {
+        Date date = Date.from(Instant.parse(expirationDate));
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/yy");
         CCConsumerCardInfo card = new CCConsumerCardInfo();
         card.setCardNumber(cardNumber);
-        card.setExpirationDate(expirationDate);
+        card.setExpirationDate(sdf.format(date));
         card.setCvv(cvv);
 
         final Callback cb = callback;
@@ -42,12 +48,12 @@ public class CardConnectModule extends ReactContextBaseJavaModule {
         CCConsumer.getInstance().getApi().generateAccountForCard(card, new CCConsumerTokenCallback() {
             @Override
             public void onCCConsumerTokenResponse(CCConsumerAccount consumerAccount) {
-                cb.invoke(null, "token:" + consumerAccount.getToken() + ",endpoint:" + CCConsumer.getInstance().getApi().getEndPoint());
+                cb.invoke(null, consumerAccount.getToken());
             }
 
             @Override
             public void onCCConsumerTokenResponseError(CCConsumerError error) {
-                cb.invoke("error:" + error.getResponseMessage() + ":" + error.toString() + ",endpoint:" + CCConsumer.getInstance().getApi().getEndPoint(), null);
+                cb.invoke(error.getResponseMessage() + ":" + error.toString(), null);
             }
         });
     }
