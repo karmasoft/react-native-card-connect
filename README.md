@@ -1,5 +1,7 @@
 # react-native-card-connect
 
+*Note* These bindings only implement card tokenization for now (iOS and Android). Feel free to fork, bridge additional functionality and create a pull request.
+
 ## Getting started
 
 `$ npm install react-native-card-connect --save`
