@@ -20,7 +20,7 @@ import CardConnect from 'react-native-card-connect';
 import moment from 'moment';
 
 expDate = moment('12/22', 'MM/YY').toISOString();
-CardConnect.setEndpoint('fts.cardconnect.com:6443')
+CardConnect.setEndpoint('fts.cardconnect.com')
 // card, expiration date, CVV
 CardConnect.generateTokenForCard('4788250000121443', expDate, '123', (error, token) => {
   // handle error or generated token
