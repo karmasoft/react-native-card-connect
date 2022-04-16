@@ -9,12 +9,12 @@ Pod::Spec.new do |s|
   s.description  = <<-DESC
                   react-native-card-connect
                    DESC
-  s.homepage     = "https://github.com/karmasoft/rn-cardconnect"
+  s.homepage     = "https://github.com/karmasoft/reac-native-card-connect"
   s.license      = "MIT"
   # s.license    = { :type => "MIT", :file => "FILE_LICENSE" }
   s.authors      = { "Dima Berastau" => "dima.berastau@gmail.com" }
   s.platforms    = { :ios => "9.0" }
-  s.source       = { :git => "https://github.com/karmasoft/rn-cardconnect.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/karmasoft/react-native-card-connect.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,swift}"
   s.requires_arc = true
