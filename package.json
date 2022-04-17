@@ -1,7 +1,7 @@
 {
   "name": "react-native-card-connect",
   "title": "React Native Card Connect",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CardConnect Bridge for ReactNative",
   "main": "index.js",
   "scripts": {

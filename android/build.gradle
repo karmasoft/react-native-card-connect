@@ -35,8 +35,8 @@ android {
     defaultConfig {
         minSdkVersion safeExtGet('minSdkVersion', DEFAULT_MIN_SDK_VERSION)
         targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.0.2"
     }
     lintOptions {
         abortOnError false
@@ -53,12 +53,16 @@ repositories {
     google()
     mavenCentral()
     jcenter()
+    flatDir {
+        dirs("$rootDir/libs")
+    }
 }
 
 dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'  // From node_modules
     implementation 'com.google.code.gson:gson:2.8.2'
-    implementation fileTree(dir: 'libs', include: ['*.aar'])
+    // implementation fileTree(dir: 'libs', include: ['*.aar'])
+    api(name:'boltsdk-release-3.0.65', ext:'aar')
 }
 
