@@ -2,10 +2,14 @@
 
 buildscript {
     ext {
-        buildToolsVersion = "29.0.3"
-        minSdkVersion = 18
-        compileSdkVersion = 29
-        targetSdkVersion = 29
+        minSdkVersion = 29
+        compileSdkVersion = 30
+        targetSdkVersion = 30
+        supportLibVersion = "29.0.0"
+        googlePlayServicesAuthVersion = "17.0.0"
+        playServicesVersion = "17.0.0"
+        androidMapsUtilsVersion = "+0.5"
+        kotlinVersion = "1.5.10"
     }
     repositories {
         google()

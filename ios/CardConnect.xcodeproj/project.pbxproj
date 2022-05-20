@@ -491,6 +491,7 @@
 		58B511F01A9E6C8500147676 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DISABLE_MANUAL_TARGET_ORDER_BUILD_WARNING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CardConnectSDK/Universal",
@@ -513,6 +514,7 @@
 		58B511F11A9E6C8500147676 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DISABLE_MANUAL_TARGET_ORDER_BUILD_WARNING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CardConnectSDK/Universal",
