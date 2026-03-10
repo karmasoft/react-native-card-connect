@@ -1,25 +1,30 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import CardConnect from 'react-native-card-connect';
 import moment from 'moment';
+import { Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import CardConnect from 'react-native-card-connect';
 
 export default class App extends Component {
   state = {
     status: 'starting',
-    message: '--'
+    message: '--',
   };
   componentDidMount() {
-    expirationDate = moment('12/22', 'MM/YY').toISOString();
+    const expirationDate = moment('12/22', 'MM/YY').toISOString();
     console.log(expirationDate);
-    CardConnect.setEndpoint('boltgw-uat.cardconnect.com')
-    CardConnect.generateTokenForCard('4242424242424242', expirationDate, '123', (error, token) => {
-      console.log(token)
-      console.log(error)
-      this.setState({
-        status: 'native callback received',
-        message: token ? token + ";" + expirationDate : error
-      });
-    });
+    CardConnect.setEndpoint('boltgw-uat.cardconnect.com');
+    CardConnect.generateTokenForCard(
+      '4242424242424242',
+      expirationDate,
+      '123',
+      (error, token) => {
+        console.log(token);
+        console.log(error);
+        this.setState({
+          status: 'native callback received',
+          message: token ? token + ';' + expirationDate : error,
+        });
+      },
+    );
   }
   render() {
     return (

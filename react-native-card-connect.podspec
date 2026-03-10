@@ -13,13 +13,13 @@ Pod::Spec.new do |s|
   s.license      = "MIT"
   # s.license    = { :type => "MIT", :file => "FILE_LICENSE" }
   s.authors      = { "Dima Berastau" => "dima.berastau@gmail.com" }
-  s.platforms    = { :ios => "9.0" }
+  s.platforms    = { :ios => "13.4" }
   s.source       = { :git => "https://github.com/karmasoft/react-native-card-connect.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,swift}"
   s.requires_arc = true
 
-  s.dependency "React"
+  s.dependency "React-Core"
   s.ios.vendored_frameworks = "**/ios/CardConnectConsumerSDK.framework"
   # ...
   # s.dependency "..."
